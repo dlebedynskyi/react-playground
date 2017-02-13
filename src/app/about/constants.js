@@ -1,0 +1,1 @@
+export const ABOUT_SWITCH = 'about/SWITCH';

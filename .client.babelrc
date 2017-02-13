@@ -1,0 +1,25 @@
+{
+  "sourceMaps": true,
+  "presets": [
+    "react",
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 9"]
+      },
+      "modules": false,
+      "loose": true,
+      "useBuiltIns": true
+    }]
+  ],
+  "plugins": [
+    "transform-class-properties",
+    "transform-export-extensions",
+    ["transform-react-jsx", {
+      "useBuiltIns": true
+      }],
+    ["transform-object-rest-spread", {
+      "useBuiltIns": true
+      }],
+    "react-hot-loader/babel"
+  ]
+}

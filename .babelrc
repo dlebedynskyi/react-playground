@@ -1,0 +1,22 @@
+{
+  "sourceMaps": true,
+  "presets": [
+    "react",
+    ["env", {
+      "targets": {
+        "node": true
+      },
+      "useBuiltIns": true
+    }]
+  ],
+  "plugins": [
+    "transform-class-properties",
+    "transform-export-extensions",
+    ["transform-react-jsx", {
+      "useBuiltIns": true
+      }],
+    ["transform-object-rest-spread", {
+      "useBuiltIns": true
+      }]
+  ]
+}

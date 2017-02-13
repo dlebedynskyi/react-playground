@@ -1,0 +1,3 @@
+src/server/public/lib/*
+build/*
+docker/*
