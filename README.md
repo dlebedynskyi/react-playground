@@ -196,6 +196,7 @@ This may not be ideal for some scenarios and should be used with caution. Main r
  - Creating new redux function and replacing state function with it.
  
  ###Caveats using async reducers###
+ 
  1. **SSR.** we don't won't to loose initialState that was sent from server. Redux currently is checking that once we create store on client and will remove all state that does not have reducers yet. _And we don't have it since we have not loaded our components yet_. To fix that we use `dummyReducer` function that will be later replaced with real one. 
  
 ```
