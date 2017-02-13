@@ -1,6 +1,8 @@
 # react-playground
 React application with React Router v4, async components etc
 
+
+
 ## What is this for? 
 Demo app to show react router v4 beta with async component, code split and async reducer registration.
 
@@ -65,6 +67,8 @@ const AsyncAbout = createAsyncComponent({
 export default AsyncAbout;
 ```
 
+
+
 ### Server Side setup
 
 Server side setup is done within `render-app.js`
@@ -107,6 +111,8 @@ const body = renderToString(appWithAsyncComponents);
 
 And at this point you have SSR of React app using React router with Async Components.
 
+
+
 ## Handling 404 and redirects with React Router
 
 - View `Status.jsx`. All this component is doing really is just setting value on Static Router Context.  
@@ -146,6 +152,8 @@ if (routerContext.url) {
 ```
 
 -  If you try to navigate to  `/legal` you will see that Not Found is returned and server is giving us 404 as expected. `/topic` will do 301 redirect. More details on how to use [Switch](https://reacttraining.com/react-router/examples/ambiguous-matches)
+
+
 
 ## Enabling async reducers 
 
@@ -195,6 +203,8 @@ This may not be ideal for some scenarios and should be used with caution. Main r
 `injectReducer` is a function that is responsible for
  - checking is async reducer was already injected into async registry
  - Creating new redux function and replacing state function with it.
+ 
+ 
  
  ###Caveats using async reducers###
  
