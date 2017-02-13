@@ -10184,6 +10184,10 @@ var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Redirect = __webpack_require__(341);
+
+var _Redirect2 = _interopRequireDefault(_Redirect);
+
 var _Route = __webpack_require__(309);
 
 var _Route2 = _interopRequireDefault(_Route);
@@ -10273,6 +10277,7 @@ exports.default = () => _react2.default.createElement(
     _Switch2.default,
     null,
     _react2.default.createElement(_Route2.default, { exact: true, path: '/', component: _home2.default }),
+    _react2.default.createElement(_Route2.default, { path: '/topics', render: () => _react2.default.createElement(_Redirect2.default, { to: '/' }) }),
     _react2.default.createElement(_Route2.default, { path: '/about', component: _about2.default }),
     _react2.default.createElement(_Route2.default, { component: NotFound })
   )
@@ -10422,7 +10427,10 @@ var _core2 = _interopRequireDefault(_core);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = { core: _core2.default };
+exports.default = {
+  core: _core2.default
+  // rest of shared reducers like forms etc
+};
 
 /***/ }),
 /* 158 */
@@ -25066,6 +25074,87 @@ module.exports = require("webpack");
 
 module.exports = __webpack_require__(149);
 
+
+/***/ }),
+/* 339 */,
+/* 340 */,
+/* 341 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * The public API for updating the location programatically
+ * with a component.
+ */
+var Redirect = function (_React$Component) {
+  _inherits(Redirect, _React$Component);
+
+  function Redirect() {
+    _classCallCheck(this, Redirect);
+
+    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+  }
+
+  Redirect.prototype.componentWillMount = function componentWillMount() {
+    if (this.context.router.staticContext) this.perform();
+  };
+
+  Redirect.prototype.componentDidMount = function componentDidMount() {
+    if (!this.context.router.staticContext) this.perform();
+  };
+
+  Redirect.prototype.perform = function perform() {
+    var router = this.context.router;
+    var _props = this.props,
+        push = _props.push,
+        to = _props.to;
+
+
+    if (push) {
+      router.push(to);
+    } else {
+      router.replace(to);
+    }
+  };
+
+  Redirect.prototype.render = function render() {
+    return null;
+  };
+
+  return Redirect;
+}(_react2.default.Component);
+
+Redirect.contextTypes = {
+  router: _react.PropTypes.shape({
+    push: _react.PropTypes.func.isRequired,
+    replace: _react.PropTypes.func.isRequired,
+    staticContext: _react.PropTypes.object
+  }).isRequired
+};
+Redirect.propTypes = {
+  push: _react.PropTypes.bool,
+  to: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object])
+};
+Redirect.defaultProps = {
+  push: false
+};
+exports.default = Redirect;
 
 /***/ })
 /******/ ]);

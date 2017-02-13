@@ -1,4 +1,5 @@
 import React from 'react';
+import Redirect from 'react-router/Redirect';
 import Route from 'react-router-dom/Route';
 import Link from 'react-router-dom/Link';
 import Switch from 'react-router-dom/Switch';
@@ -24,6 +25,7 @@ export default() => (
     <hr />
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route path="/topics" render={() => <Redirect to="/" />} />
       <Route path="/about" component={About} />
       <Route component={NotFound} />
     </Switch>
