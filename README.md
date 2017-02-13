@@ -15,7 +15,7 @@ Bases on excellent work of great people
 
 ## Client Side setup
 
-1. Open `Root.jsx`.  There you can see that we have pretty basic RR4 routing. 
+- Open `Root.jsx`.  There you can see that we have pretty basic RR4 routing. 
 ```jsx
 <ul>
   <li> <Link to="/">Home</Link> </li>
@@ -25,7 +25,7 @@ Bases on excellent work of great people
 </ul>
 ```
 
-2. Open `client-entry.js`. Here we have Routing set up for React Router and Redux store.
+- Open `client-entry.js`. Here we have Routing set up for React Router and Redux store.
 ```jsx
 // create render function
 const render = RootEl => {
@@ -45,7 +45,7 @@ withAsyncComponents(app).then(({appWithAsyncComponents}) => {
 });
 ```
 
-3. Open `About/index.jsx`. It has a bit more then you need to code split. And we will get back to it later.
+- Open `About/index.jsx`. It has a bit more then you need to code split. And we will get back to it later.
 Below is full code you need to code split of components using RR4 and `react-async-component`.   
 
 ```jsx 
@@ -68,7 +68,7 @@ export default AsyncAbout;
 ### Server Side setup
 
 Server side setup is done within `render-app.js`
-1. Redux Store and Router
+- Redux Store and Router
 ```jsx
 import {Provider as Redux} from 'react-redux';
 import StaticRouter from 'react-router/StaticRouter';
@@ -83,7 +83,7 @@ const App = (store, req, routerContext) => (
 
 ```   
 
-2. rendering app with Router context and async components
+-  rendering app with Router context and async components
 ```jsx
 // create router context
 const routerContext = {};
@@ -95,7 +95,7 @@ const {appWithAsyncComponents} = asyncSplit;
 const body = renderToString(appWithAsyncComponents);
 ```
 
-3. Rendering actual page is done in `Html.jsx`. For client to understand what content we rendered and do same we need to pass down async chunk state 
+- Rendering actual page is done in `Html.jsx`. For client to understand what content we rendered and do same we need to pass down async chunk state 
 ```jsx
 {asyncComponents && asyncComponents.state ?
   <script
@@ -109,7 +109,7 @@ And at this point you have SSR of React app using React router with Async Compon
 
 ## Handling 404 and redirects with React Router
 
-1. View `Status.jsx`. All this component is doing really is just setting value on Static Router Context.  
+- View `Status.jsx`. All this component is doing really is just setting value on Static Router Context.  
 
 ```jsx
 componentWillMount() {
@@ -120,7 +120,7 @@ componentWillMount() {
 }
 ```
 
-2. then we can handle this value in `render-app.js` for SSR   
+- Then we can handle this value in `render-app.js` for SSR   
 
 ```
 // checking is page is 404
@@ -136,7 +136,8 @@ if (routerContext.status === '404') {
 const page = renderPage(body, head, initialState, config, assets, asyncSplit);
 res.status(status).send(page);
 ```
-3. This is basically same exact thing RR 4 is doing for redirect.  
+
+- This is basically same exact thing RR 4 is doing for redirect.  
 
 ```jsx
 if (routerContext.url) {
@@ -144,7 +145,7 @@ if (routerContext.url) {
   res.status(301).setHeader('Location', routerContext.url);
 ```
 
-4. If you try to navigate to  `/legal` you will see that Not Found is returned and server is giving us 404 as expected. `/topic` will do 301 redirect. More details on how to use [Switch](https://reacttraining.com/react-router/examples/ambiguous-matches)
+-  If you try to navigate to  `/legal` you will see that Not Found is returned and server is giving us 404 as expected. `/topic` will do 301 redirect. More details on how to use [Switch](https://reacttraining.com/react-router/examples/ambiguous-matches)
 
 ## Enabling async reducers 
 
@@ -197,7 +198,7 @@ This may not be ideal for some scenarios and should be used with caution. Main r
  
  ###Caveats using async reducers###
  
- 1. **SSR.** we don't won't to loose initialState that was sent from server. Redux currently is checking that once we create store on client and will remove all state that does not have reducers yet. _And we don't have it since we have not loaded our components yet_. To fix that we use `dummyReducer` function that will be later replaced with real one. 
+ -  **SSR.** we don't won't to loose initialState that was sent from server. Redux currently is checking that once we create store on client and will remove all state that does not have reducers yet. _And we don't have it since we have not loaded our components yet_. To fix that we use `dummyReducer` function that will be later replaced with real one. 
  
 ```
 const initialReducers = createAsyncReducers({}, Object.keys(initialState));
@@ -214,7 +215,7 @@ const initialReducers = createAsyncReducers({}, Object.keys(initialState));
   } 
   
 ```
-2. All shared reducers should be registered outside of code split. See `core` folder and stuff.
+- All shared reducers should be registered outside of code split. See `core` folder and stuff.
  
 
  
