@@ -6,8 +6,8 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const webpackClient = require('./client');
 const webpackServer = require('./server');
 
-const {SERVER_PATH, COMPILED} = require('../src/config/paths');
-const env = require('../src/config/environment');
+const {SERVER_PATH, COMPILED} = require('../config/paths');
+const env = require('../config/environment');
 
 
 const logger = require('./logger');

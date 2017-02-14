@@ -6,11 +6,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 
 import { routingApp, setRoutes } from './router';
-import buildAssets from '../config/assets';
 
-const assets = buildAssets();
-
-export const createServer = config => {
+export const createServer = (config, buildAssets) => {
   const server = express();
 
   const log = debug('react-playground:server.js');
@@ -54,7 +51,7 @@ export const createServer = config => {
   server.enable('view cache');
   server.enable('strict routing');
 
-  setRoutes(assets, config);
+  setRoutes(config, buildAssets);
   server.use('/', routingApp);
   // Don't expose any software information to potential hackers.
   server.disable('X-Powered-By');

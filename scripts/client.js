@@ -7,13 +7,13 @@ const hotMiddleware = require('webpack-hot-middleware');
 const webpack = require('webpack');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
-const {PUBLIC} = require('../src/config/paths');
-const webpackConfig = require('../src/config/webpack.config.dev');
-const env = require('../src/config/environment');
+const {PUBLIC} = require('../config/paths');
+const webpackConfig = require('../config/webpack.config.dev');
+const env = require('../config/environment');
 
 
 const logger = require('./logger');
-const buildUtils = require('../src/config/utils');
+const buildUtils = require('../config/utils');
 
 const log = {
   general: console.log,

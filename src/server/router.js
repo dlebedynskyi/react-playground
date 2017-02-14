@@ -4,7 +4,7 @@ import compression from 'compression';
 
 import renderApp from './middleware/render-app';
 
-import { DIST, PUBLIC } from '../config/paths';
+import { DIST, PUBLIC } from '../../config/paths';
 import {onError} from './middleware/error';
 
 const log = debug('react-playground:router');
@@ -29,7 +29,8 @@ function getStaticAssets(config) {
   });
 }
 
-export function setRoutes(assets, config) {
+export function setRoutes(config, buildAssets) {
+  const assets = buildAssets();
   log('adding react routes');
   log('recived assets', assets);
   log('public path maps to', PUBLIC);

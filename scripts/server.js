@@ -2,7 +2,7 @@
 const webpack = require('webpack');
 const debug = require('debug');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const webpackConfig = require('../src/config/webpack.config.server.js');
+const webpackConfig = require('../config/webpack.config.server.js');
 
 const logger = require('./logger');
 
