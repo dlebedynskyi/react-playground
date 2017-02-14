@@ -30,7 +30,6 @@ const App = (store, req, routerContext) => (
 );
 
 const renderPage = (body, head, initialState, config, assets, {state, STATE_IDENTIFIER} = {}) => {
-
   perfomanceLog('rendering page result for ');
   const clientConfig = buildClientConfig(config);
   const stylesheet = assets.stylesheet;
@@ -97,7 +96,6 @@ export default function renderAppWrapper(assets, config) {
     timing.stopTimer('Render');
     res.setHeader('Server-Timing', timing.generateHeader());
     res.status(status).send(page);
-
 
     perfomanceLog(`request ended for ${req.protocol}://${req.get('host')}${req.originalUrl}`);
     next();
