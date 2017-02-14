@@ -1,18 +1,19 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable import/prefer-default-export, no-console */
 const webpack = require('webpack');
 const debug = require('debug');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const webpackConfig = require('../src/config/webpack.config.server.js');
 
-const formatWebpackMessages = require('./formatWebpackMessages');
 const logger = require('./logger');
 
 const log = {
-  general: console.log,
+  warn: console.warn || console.log,
+  error: console.error,
   pack: debug('react-playground:build:server')
 };
 let hasCompleteFirstCompilation = false;
 
-module.exports = function runCompiler(cb = () => {}) {
+module.exports = () => new Promise((resolve, reject) => {
   logger.start('Building server');
   const compiler = webpack(webpackConfig);
   let watcher;
@@ -24,30 +25,41 @@ module.exports = function runCompiler(cb = () => {}) {
       chunks: false,
       colors: true
     }));
-
-    const rawMessages = stats.toJson({}, true);
-    const messages = formatWebpackMessages(rawMessages);
-
-    if (!messages.errors.length && !messages.warnings.length) {
-      logger.task('Server compiled successfully!');
-      hasCompleteFirstCompilation = true;
-      if (cb) { cb(stats); }
+    if (err) {
+      console.error('got webpack error', err);
+      reject(err);
       return;
     }
 
+    const rawMessages = stats.toJson({}, true);
+    const messages = formatWebpackMessages(rawMessages);
+    // resolving promise on first compilation complete
+    if (!messages.errors.length) {
+      logger.task('Server compiled successfully!');
+      hasCompleteFirstCompilation = true;
+      resolve(watcher);
+      return;
+    }
+
+    // some errors happened
     if (messages.errors.length) {
       logger.error('Failed to compile.');
-      messages.errors.forEach(log.general);
-
-      if (!hasCompleteFirstCompilation) { onExit(); }
+      // report errors to console
+      messages.errors.forEach(log.error);
+      // first compile failed. rejecting promise
+      if (!hasCompleteFirstCompilation) {
+        onExit();
+        reject(stats);
+      }
       return;
     }
 
     if (messages.warnings.length) {
       logger.warn('Compiled with warnings.');
-      messages.warnings.forEach(log.general);
+      messages.warnings.forEach(log.warn);
     }
   });
 
+  process.on('SIGTERM', onExit);
   process.on('SIGINT', onExit);
-};
+});

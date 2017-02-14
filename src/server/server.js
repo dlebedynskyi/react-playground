@@ -14,7 +14,7 @@ export const createServer = config => {
   const server = express();
 
   const log = debug('react-playground:server.js');
-  log('starting');
+  log('starting with config %O', config);
   server.set('etag', true);
 
   // Prevent HTTP Parameter pollution.

@@ -8,6 +8,7 @@ import { DIST, PUBLIC } from '../config/paths';
 import {onError} from './middleware/error';
 
 const log = debug('react-playground:router');
+
 export const routingApp = express();
 
 /**
@@ -49,10 +50,10 @@ export function setRoutes(assets, config) {
     })
     .use(getStaticAssets(config))
     .use(compression());
-    
+
   routingApp
     .get('*', renderApp(assets, config));
-    
+
   // setting dynamicCache for html page
   if (config.environment === 'production') {
     routingApp
