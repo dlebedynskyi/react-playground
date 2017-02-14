@@ -16,5 +16,5 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 const server = createServer(config, buildAssets);
 
 server.listen(config.port, () => {
-  console.log(`listening at ${config.port}://${config.hostname}:${config.port}`); // eslint-disable-line
+  console.log(`listening at http://localhost:${config.port}`); // eslint-disable-line
 });

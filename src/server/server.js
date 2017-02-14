@@ -10,8 +10,10 @@ import { routingApp, setRoutes } from './router';
 export const createServer = (config, buildAssets) => {
   const server = express();
 
-  const log = debug('react-playground:server.js');
-  log('starting with config %O', config);
+  const log = debug('react-playground:server');
+  log('starting with config: ');
+  log('%O', config);
+
   server.set('etag', true);
 
   // Prevent HTTP Parameter pollution.

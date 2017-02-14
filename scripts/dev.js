@@ -13,7 +13,7 @@ const env = require('../config/environment');
 const logger = require('./logger');
 
 const log = debug('react-playground:build:nodemon');
-
+// Define
 const monitorServer = () => {
   logger.start('Starting to monitor build');
   log('execute path', SERVER_PATH);

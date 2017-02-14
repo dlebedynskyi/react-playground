@@ -29,6 +29,8 @@ module.exports = () => {
   });
 
   const result = {javascript, stylesheet};
-  log('building assets set', result);
+  log('building assets');
+  log(result);
+
   return result;
 };
