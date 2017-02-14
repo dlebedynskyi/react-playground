@@ -4,10 +4,11 @@ import compression from 'compression';
 
 import renderApp from './middleware/render-app';
 
-import { DIST, PUBLIC } from '../config/paths';
+import { DIST, PUBLIC } from '../../config/paths';
 import {onError} from './middleware/error';
 
 const log = debug('react-playground:router');
+
 export const routingApp = express();
 
 /**
@@ -28,7 +29,8 @@ function getStaticAssets(config) {
   });
 }
 
-export function setRoutes(assets, config) {
+export function setRoutes(config, buildAssets) {
+  const assets = buildAssets();
   log('adding react routes');
   log('recived assets', assets);
   log('public path maps to', PUBLIC);
@@ -49,10 +51,10 @@ export function setRoutes(assets, config) {
     })
     .use(getStaticAssets(config))
     .use(compression());
-    
+
   routingApp
     .get('*', renderApp(assets, config));
-    
+
   // setting dynamicCache for html page
   if (config.environment === 'production') {
     routingApp

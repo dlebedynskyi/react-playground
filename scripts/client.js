@@ -1,17 +1,19 @@
+/* eslint-disable import/prefer-default-export, no-console */
 const express = require('express');
 const debug = require('debug');
 
 const devMiddleware = require('webpack-dev-middleware');
 const hotMiddleware = require('webpack-hot-middleware');
 const webpack = require('webpack');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 
-const {PUBLIC} = require('../src/config/paths');
-const webpackConfig = require('../src/config/webpack.config.dev');
-const env = require('../src/config/environment');
+const {PUBLIC} = require('../config/paths');
+const webpackConfig = require('../config/webpack.config.dev');
+const env = require('../config/environment');
 
-const formatWebpackMessages = require('./formatWebpackMessages');
+
 const logger = require('./logger');
-const buildUtils = require('../src/config/utils');
+const buildUtils = require('../config/utils');
 
 const log = {
   general: console.log,
@@ -21,7 +23,7 @@ const log = {
 
 let hasCompleteFirstCompilation = false;
 
-module.exports = function runClient(cb = () => {}) {
+module.exports = () => new Promise((resolve, reject) => {
   logger.start('Creating assets server');
   const app = express();
   const compiler = webpack(webpackConfig);
@@ -74,8 +76,9 @@ module.exports = function runClient(cb = () => {}) {
       if (!hasCompleteFirstCompilation) {
         logger.end('Assets server compiled');
       }
-      if (cb) { cb(stats); }
+
       hasCompleteFirstCompilation = true;
+      resolve(httpServer);
       return;
     }
 
@@ -83,7 +86,11 @@ module.exports = function runClient(cb = () => {}) {
       logger.error('Failed to compile.');
       messages.errors.forEach(log.general);
 
-      if (!hasCompleteFirstCompilation) { onExit(); }
+      if (!hasCompleteFirstCompilation) {
+        onExit();
+        reject(stats);
+      }
+
       return;
     }
 
@@ -95,6 +102,7 @@ module.exports = function runClient(cb = () => {}) {
 
   httpServer = app.listen(env.assetsPort);
   process.on('SIGTERM', onExit);
+  process.on('SIGINT', onExit);
 
   logger.info(`Assets Server spawned at :${env.assetsPort}. Please wait for assets rebuild`);
-};
+});

@@ -1,16 +1,16 @@
-const once = require('lodash.once');
 const nodemon = require('nodemon');
 const debug = require('debug');
+const clearConsole = require('react-dev-utils/clearConsole');
+const openBrowser = require('react-dev-utils/openBrowser');
 
-const wpClient = require('./client');
-const wpServer = require('./server');
+const webpackClient = require('./client');
+const webpackServer = require('./server');
 
-const {SERVER_PATH, COMPILED} = require('../src/config/paths');
-const env = require('../src/config/environment');
+const {SERVER_PATH, COMPILED} = require('../config/paths');
+const env = require('../config/environment');
 
-const clearConsole = require('./clearConsole');
+
 const logger = require('./logger');
-const openBrowser = require('./openBrowser');
 
 const log = debug('react-playground:build:nodemon');
 
@@ -19,14 +19,14 @@ const monitorServer = () => {
   log('execute path', SERVER_PATH);
   log('watching for ', COMPILED);
 
-  nodemon({
+  return nodemon({
     script: SERVER_PATH,
     watch: [COMPILED]
   })
   .once('start', () => {
     logger.end('Server started');
     if (process.env.NO_BROWSER !== 'true') {
-      const url = `${env.protocol}://${env.host}`;
+      const url = `${env.protocol}://${env.hostname}${env.port ? `:${env.port}` : ''}`;
       log(`setting timer to open browser at ${url}`);
       setTimeout(() => { openBrowser(url); }, 1000);
     }
@@ -40,10 +40,15 @@ const monitorServer = () => {
   .on('quit', process.exit);
 };
 
-const runServer = () => wpServer(once(monitorServer));
+const onExit = code => { process.exit(code); };
 
-process.on('EADDRINUSE', () => process.exit(1));
+process.on('EADDRINUSE', onExit);
+process.on('SIGINT', onExit);
+process.on('SIGTERM', onExit);
 
 clearConsole();
 logger.start('Starting build');
-wpClient(once(runServer));
+
+webpackClient()
+.then(() => webpackServer())
+.then(() => monitorServer());

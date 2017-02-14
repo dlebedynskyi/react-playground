@@ -11,7 +11,6 @@ module.exports = () => {
   const stylesheet = [];
   const file = fs.readFileSync(WEBPACK_ASSET_FILE_PATH, 'utf8');
   const assets = file ? JSON.parse(file) : null;
-  log('assets', assets);
   if (!file || !assets) {
     log('Assets file was not found. Expected ', file);
     return {javascript, stylesheet};
@@ -28,8 +27,8 @@ module.exports = () => {
       stylesheet.push(assets[k].css);
     }
   });
-  
+
   const result = {javascript, stylesheet};
-  log(result);
+  log('building assets set', result);
   return result;
 };

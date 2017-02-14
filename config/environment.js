@@ -19,10 +19,10 @@ if (configValue.environment === 'development') {
 
 configValue.port = getEnvOrDefault('PORT', 5001);
 configValue.protocol = getEnvOrDefault('PROTOCOL', 'http');
-configValue.host = getEnvOrDefault('WEBSITE_HOSTNAME');
+configValue.hostname = getEnvOrDefault('HOSTNAME', 'localhost');
 
 configValue.staticAssetsCache = getEnvOrDefault('STATIC_CACHE_DURATION', 1000 * 60 * 60 * 24 * 30); // 30 days
-configValue.dynamicCache = getEnvOrDefault('DYNAMIC_CACHE_DURATION', 0); // 0 sec
+configValue.dynamicCache = getEnvOrDefault('DYNAMIC_CACHE_DURATION', 0); // 0 ms
 
 configValue.contentDir =
   configValue.environment === 'development' ?
@@ -30,9 +30,6 @@ configValue.contentDir =
   DIST_CONTENT_PATH;
 
 debug.enable(process.env.DEBUG);
-
-const log = debug('react-playground:Environment:');
-log(configValue);
 
 module.exports = configValue;
 
