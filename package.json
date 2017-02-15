@@ -6,7 +6,17 @@
   "scripts": {
     "clean": "rm -rf build",
     "prestart": "npm run clean",
-    "start": "NODE_ENV=development DEBUG=react-playground:* node scripts/dev.js"
+    "build:dev:client": "webpack --config config/webpack.config.dev.js",
+    "build:dev:server": "webpack --config config/webpack.config.server.js",
+    "build:dev": "npm run clean && npm run build:dev:server && npm run build:dev:client",
+    "build:prod:client": "NODE_ENV=production webpack --config config/webpack.config.prod.js -p",
+    "build:prod:server": "NODE_ENV=production webpack --config config/webpack.config.server.js",
+    "prebuild": "npm run clean",
+    "build": "npm run build:prod:server && npm run build:prod:client",
+    "prestart:release": "npm run build",
+    "start:release": "node build/server.js",
+    "start": "NODE_ENV=development DEBUG=react-playground:* node scripts/dev.js",
+    "dev": "NODE_ENV=development DEBUG=react-playground:* node scripts/dev.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +36,7 @@
     "express": "^4.14.1",
     "helmet": "^3.4.0",
     "hpp": "^0.2.1",
+    "ignore-styles": "^5.0.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash.get": "^4.4.2",
     "lodash.has": "^4.5.2",

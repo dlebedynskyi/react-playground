@@ -12,6 +12,7 @@ import configureStore from './app/store/store';
 import ReactHotLoader from './app/ReactHotLoader';
 import {configureENV} from './app/core/env';
 import {INITIAL_CONSTRUCT} from './app/core/constants';
+import './styles/app.scss';
 
 const log = debug('react-playground:client-entry');
 log('Client environment %s', process.env);

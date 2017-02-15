@@ -1,4 +1,5 @@
 require('core-js');
+require('ignore-styles');
 
 const getAssets = require('../config/assets');
 const configureENV = require('./app/core/env').configureENV;

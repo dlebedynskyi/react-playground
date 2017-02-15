@@ -25,8 +25,8 @@ prodConfig.plugins.push(new ExtractTextPlugin({filename: '[name].[contenthash].c
 // it is expectec to have only static assets
 prodConfig.plugins.push(
   new CopyWebpackPlugin([
-    { from: PUBLIC, to: DIST },
-    { from: CONTENT, to: DIST_CONTENT_PATH }
+    { from: PUBLIC, to: DIST, ignore: '**/.*' },
+    { from: CONTENT, to: DIST_CONTENT_PATH, ignore: '**/.*' }
   ])
 );
 

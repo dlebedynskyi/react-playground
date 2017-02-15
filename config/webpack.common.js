@@ -26,7 +26,6 @@ module.exports = {
   entry: {
     vendor,
     app: [
-      `${SRC}/styles/app.scss`,
       `${SRC}/client-entry.js`
     ]
   },
