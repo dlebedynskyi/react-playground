@@ -84,7 +84,8 @@ Html.defaultProps = {
   initialState: null,
   codeSplitState: null,
   style: null,
-  asyncComponents: null
+  asyncComponents: null,
+  assets: {}
 };
 
 Html.propTypes = {
@@ -93,7 +94,7 @@ Html.propTypes = {
     meta: PropTypes.object,
     link: PropTypes.object
   }).isRequired,
-  stylesheet: React.PropTypes.arrayOf(React.PropTypes.string),
+  assets: React.PropTypes.object,
   config: PropTypes.shape({
     analytics: PropTypes.shape({
       google: PropTypes.shape({
@@ -104,8 +105,7 @@ Html.propTypes = {
   initialState: PropTypes.object,
   asyncComponents: PropTypes.object,
   style: PropTypes.string,
-  body: PropTypes.node.isRequired,
-  script: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  body: PropTypes.node.isRequired
 };
 
 export default Html;

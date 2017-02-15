@@ -18,7 +18,6 @@ const CONTENT = path.join(SERVER, 'content');
 const DIST_CONTENT_PATH = path.join(COMPILED, 'content');
 const ICONS = path.join(SRC, 'icons');
 const STYLES = path.join(SRC, 'styles');
-const TESTS = path.join(ROOT, 'tests');
 
 const WEBPACK_ASSET_FILE_NAME = 'webpack-assets.json';
 const WEBPACK_ASSET_FILE_FOLDER = COMPILED;
@@ -39,7 +38,6 @@ module.exports = {
   PUBLIC,
   CONTENT,
   STYLES,
-  TESTS,
   WEBPACK_ASSET_FILE_NAME,
   WEBPACK_ASSET_FILE_FOLDER,
   WEBPACK_ASSET_FILE_PATH

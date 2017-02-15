@@ -4,6 +4,7 @@
 // https://github.com/motdotla/dotenv
 require('dotenv').config({silent: true});
 const debug = require('debug');
+
 const {CONTENT, DIST_CONTENT_PATH} = require('./paths');
 
 const configValue = {};
