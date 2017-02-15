@@ -7,7 +7,7 @@ import compression from 'compression';
 
 import { routingApp, setRoutes } from './router';
 
-export const createServer = (config, buildAssets) => {
+export const createServer = (config, getAssets) => {
   const server = express();
 
   const log = debug('react-playground:server');
@@ -53,7 +53,7 @@ export const createServer = (config, buildAssets) => {
   server.enable('view cache');
   server.enable('strict routing');
 
-  setRoutes(config, buildAssets);
+  setRoutes(config, getAssets);
   server.use('/', routingApp);
   // Don't expose any software information to potential hackers.
   server.disable('X-Powered-By');

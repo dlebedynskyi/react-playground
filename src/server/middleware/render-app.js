@@ -32,16 +32,13 @@ const App = (store, req, routerContext) => (
 const renderPage = (body, head, initialState, config, assets, {state, STATE_IDENTIFIER} = {}) => {
   perfomanceLog('rendering page result for ');
   const clientConfig = buildClientConfig(config);
-  const stylesheet = assets.stylesheet;
-  const script = assets.javascript;
 
   const html = renderToStaticMarkup(<Html
     body={body || ''}
     head={head}
     initialState={initialState}
     config={clientConfig}
-    stylesheet={stylesheet}
-    script={script}
+    assets={assets}
     asyncComponents={{state, STATE_IDENTIFIER}} />
   );
 

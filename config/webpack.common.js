@@ -6,11 +6,12 @@ const loadBabel = require('./babel');
 
 const {publicAssets} = require('./environment');
 
+const vendor = require('./vendor');
+
 const { SRC, DIST, COMPILED_ASSETS_PUBLIC_PATH,
    WEBPACK_ASSET_FILE_NAME, WEBPACK_ASSET_FILE_FOLDER, BABEL_CLIENT } = require('./paths');
 
 const babelrc = loadBabel(BABEL_CLIENT);
-
 const babelPlugins = babelrc.plugins;
 
 if (utils.isProduction()) {
@@ -23,6 +24,7 @@ Object.assign(babelrc, {
 
 module.exports = {
   entry: {
+    vendor,
     app: [
       `${SRC}/styles/app.scss`,
       `${SRC}/client-entry.js`
@@ -43,7 +45,12 @@ module.exports = {
       'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
-    new AssetsPlugin({filename: WEBPACK_ASSET_FILE_NAME, path: WEBPACK_ASSET_FILE_FOLDER})
+    new AssetsPlugin({
+      filename: WEBPACK_ASSET_FILE_NAME,
+      path: WEBPACK_ASSET_FILE_FOLDER,
+      includeManifest: 'manifest',
+      prettyPrint: true
+    })
   ],
   resolve: {
     modules: ['node_modules', SRC],

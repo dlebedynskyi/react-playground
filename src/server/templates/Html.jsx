@@ -7,9 +7,8 @@ import serialize from 'serialize-javascript';
 const Html = ({
   head,
   style,
-  stylesheet,
+  assets,
   body,
-  script,
   config,
   initialState,
   asyncComponents
@@ -31,9 +30,11 @@ const Html = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {head.meta.toComponent()}
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-        {stylesheet ?
-          stylesheet.map((sheet, i) =>
-            <link rel="stylesheet" type="text/css" href={sheet} key={`stylesheet_${i}`} />) :
+        {assets && assets.vendor && assets.vendor.css ?
+            <link rel="stylesheet" type="text/css" href={assets.vendor.css} /> :
+            null}
+        {assets && assets.app && assets.app.css ?
+            <link rel="stylesheet" type="text/css" href={assets.app.css} /> :
             null}
         {head.link.toComponent()}
         {style ?
@@ -58,8 +59,11 @@ const Html = ({
               window.${asyncComponents.STATE_IDENTIFIER} = ${serialize(asyncComponents.state, {isJSON: true})};
               `}} /> :
             null}
-        {script ?
-          script.map((s, i) => <script src={s} key={`script_${i}`} />) :
+        {assets && assets.vendor && assets.vendor.js ?
+          <script src={assets.vendor.js} /> :
+          null}
+        {assets && assets.app && assets.app.js ?
+          <script src={assets.app.js} /> :
           null}
         {trackingId ?
           <script
