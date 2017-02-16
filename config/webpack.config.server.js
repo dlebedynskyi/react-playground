@@ -1,17 +1,13 @@
 const webpack = require('webpack');
+const nodeExternals = require('webpack-node-externals');
 
 require('./environment');
-const fs = require('fs');
-const { SRC, COMPILED } = require('./paths');
 
-const nodeModules = {};
-fs.readdirSync('node_modules')
-  .filter(module => ['.bin'].indexOf(module) === -1)
-  .forEach(module => { nodeModules[module] = `commonjs ${module}`; });
+const { SRC, COMPILED } = require('./paths');
 
 module.exports = {
   target: 'node',
-  externals: nodeModules,
+  externals: [nodeExternals()],
   entry: { server: [`${SRC}/server-entry.js`] },
   devtool: 'source-map',
   output: {
