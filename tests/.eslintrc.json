@@ -1,0 +1,13 @@
+{
+  "plugins": ["eslint-plugin-ava"],
+  "extends": "plugin:ava/recommended",
+  "rules": {
+    "import/extensions": 0,
+    "import/no-unresolved": "warn",
+    "ava/use-true-false": 0,
+    "ava/no-skip-test": "warn",
+    "ava/test-title": "warn",
+    "ava/no-ignored-test-files": 0,
+    "react/jsx-filename-extension": 0
+  }
+}

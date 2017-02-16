@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable  import/prefer-default-export, react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Error from '../templates/Error';

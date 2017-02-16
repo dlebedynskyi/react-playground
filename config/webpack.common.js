@@ -68,11 +68,11 @@ module.exports = {
         query: babelrc
       },
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         include: [/src/],
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: ['css-loader', 'postcss-loader', 'sass-loader']
+          loader: ['css-loader', 'postcss-loader']
         })
       },
       {
