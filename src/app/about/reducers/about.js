@@ -2,7 +2,7 @@ import createReducer from '../../store/createReducer';
 import {ABOUT_SWITCH} from '../constants';
 
 const initialState = {
-  counter: 0
+  counter: 1
 };
 
 export default createReducer(initialState, {
