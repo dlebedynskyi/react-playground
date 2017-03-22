@@ -1,5 +1,5 @@
 import test from 'ava';
-import reducer from 'app/home/reducers/home';
+import reducer from './home';
 
 const initialState = {
   counter: 0

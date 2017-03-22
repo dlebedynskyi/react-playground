@@ -4,4 +4,4 @@ const isNode = config => config.target === 'node';
 
 const isHot = () => process.env.HOT_RELOAD !== 'false';
 
-module.exports = {isDevelopment, isProduction, isNode, isHot};
+module.exports = { isDevelopment, isProduction, isNode, isHot };

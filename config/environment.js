@@ -2,10 +2,10 @@
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-require('dotenv').config({silent: true});
+require('dotenv').config({ silent: true });
 const debug = require('debug');
 
-const {CONTENT, DIST_CONTENT_PATH} = require('./paths');
+const { CONTENT, DIST_CONTENT_PATH } = require('./paths');
 
 const configValue = {};
 
@@ -25,10 +25,7 @@ configValue.hostname = getEnvOrDefault('HOSTNAME', 'localhost');
 configValue.staticAssetsCache = getEnvOrDefault('STATIC_CACHE_DURATION', 1000 * 60 * 60 * 24 * 30); // 30 days
 configValue.dynamicCache = getEnvOrDefault('DYNAMIC_CACHE_DURATION', 0); // 0 ms
 
-configValue.contentDir =
-  configValue.environment === 'development' ?
-  CONTENT :
-  DIST_CONTENT_PATH;
+configValue.contentDir = configValue.environment === 'development' ? CONTENT : DIST_CONTENT_PATH;
 
 debug.enable(process.env.DEBUG);
 

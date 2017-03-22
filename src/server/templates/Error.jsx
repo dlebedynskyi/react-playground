@@ -1,11 +1,13 @@
 /* eslint-disable react/no-danger */
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
-const Error = ({
-  error,
-  sentry,
-  lang
-}) => {
+const Error = (
+  {
+    error,
+    sentry,
+    lang
+  }
+) => {
   const isProduction = process.env.NODE_ENV === 'production';
   return (
     <html lang={lang}>
@@ -14,12 +16,12 @@ const Error = ({
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="title" content="Internal Server Error" />
-        {isProduction ?
-          <meta name="description" content="Internal Server Error" /> :
-            <meta name="description" content={error.message} />
-          }
-            <style
-              dangerouslySetInnerHTML={{ __html: `
+        {isProduction
+          ? <meta name="description" content="Internal Server Error" />
+          : <meta name="description" content={error.message} />}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
                 * {
                   line-height: 1.2;
                   margin: 0;
@@ -67,16 +69,17 @@ const Error = ({
                     margin: 0 0 0.3eml
                   }
                 }
-                ` }} />
+                `
+          }} />
       </head>
       <body>
-        {isProduction ?
-          <div>
-            <h1>Error</h1>
-            <p>Sorry, a critical error occurred on this page.</p>
-            {sentry ? <p>Code: {sentry} </p> : null}
-          </div> :
-            <div>
+        {isProduction
+          ? <div>
+              <h1>Error</h1>
+              <p>Sorry, a critical error occurred on this page.</p>
+              {sentry ? <p>Code: {sentry} </p> : null}
+            </div>
+          : <div>
               <h1>{error.name}</h1>
               <p>{error.message}</p>
               <pre>{error.stack}</pre>

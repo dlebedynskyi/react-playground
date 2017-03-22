@@ -8,13 +8,13 @@ import Home from './home';
 import About from './about';
 
 const NotFound = () => (
-  <div> 
-     <Status code="404" />
-     Not Found
+  <div>
+    <Status code="404" />
+    Not Found
   </div>
 );
 
-export default() => (
+export default () => (
   <div>
     <ul>
       <li> <Link to="/">Home</Link> </li>
@@ -31,4 +31,3 @@ export default() => (
     </Switch>
   </div>
 );
-

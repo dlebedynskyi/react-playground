@@ -1,5 +1,1 @@
-module.exports = [
-  'react',
-  'redux',
-  'react-redux'
-];
+module.exports = ['react', 'redux', 'react-redux'];

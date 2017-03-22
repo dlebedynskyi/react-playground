@@ -1,5 +1,5 @@
 const debug = require('debug');
-const {WEBPACK_ASSET_FILE_PATH} = require('./paths');
+const { WEBPACK_ASSET_FILE_PATH } = require('./paths');
 
 const fs = require('fs');
 

@@ -5,7 +5,7 @@ import compression from 'compression';
 import renderApp from './middleware/render-app';
 
 import { DIST, PUBLIC } from '../../config/paths';
-import {onError} from './middleware/error';
+import { onError } from './middleware/error';
 
 const log = debug('react-playground:router');
 
@@ -25,7 +25,7 @@ function getStaticAssets(config) {
 
   log('serving production assets from ', DIST);
   return express.static(DIST, {
-    maxAge: (+config.staticAssetsCache)
+    maxAge: +config.staticAssetsCache
   });
 }
 
@@ -52,16 +52,14 @@ export function setRoutes(config, buildAssets) {
     .use(getStaticAssets(config))
     .use(compression());
 
-  routingApp
-    .get('*', renderApp(assets, config));
+  routingApp.get('*', renderApp(assets, config));
 
   // setting dynamicCache for html page
   if (config.environment === 'production') {
-    routingApp
-      .use((req, res, next) => {
-        res.set('Cache-Control', `private, max-age=${config.dynamicCache}`);
-        next();
-      });
+    routingApp.use((req, res, next) => {
+      res.set('Cache-Control', `private, max-age=${config.dynamicCache}`);
+      next();
+    });
   }
   // custom error responce to client
   routingApp.use(onError);

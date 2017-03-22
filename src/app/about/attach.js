@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
-import {attachReducer} from '../store/store';
+import { attachReducer } from '../store/store';
 import withAsyncReducers from '../store/withAsyncReducers';
 import About from './containers/About';
 

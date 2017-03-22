@@ -4,12 +4,18 @@ const AssetsPlugin = require('assets-webpack-plugin');
 const utils = require('./utils');
 const loadBabel = require('./babel');
 
-const {publicAssets} = require('./environment');
+const { publicAssets } = require('./environment');
 
 const vendor = require('./vendor');
 
-const { SRC, DIST, COMPILED_ASSETS_PUBLIC_PATH,
-   WEBPACK_ASSET_FILE_NAME, WEBPACK_ASSET_FILE_FOLDER, BABEL_CLIENT } = require('./paths');
+const {
+  SRC,
+  DIST,
+  COMPILED_ASSETS_PUBLIC_PATH,
+  WEBPACK_ASSET_FILE_NAME,
+  WEBPACK_ASSET_FILE_FOLDER,
+  BABEL_CLIENT
+} = require('./paths');
 
 const babelrc = loadBabel(BABEL_CLIENT);
 const babelPlugins = babelrc.plugins;
@@ -25,9 +31,7 @@ Object.assign(babelrc, {
 module.exports = {
   entry: {
     vendor,
-    app: [
-      `${SRC}/client-entry.js`
-    ]
+    app: [`${SRC}/client-entry.js`]
   },
   performance: false,
   devtool: 'source-map',

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
-import {Provider as Redux} from 'react-redux';
+import { Provider as Redux } from 'react-redux';
 
 import StaticRouter from 'react-router/StaticRouter';
 import { withAsyncComponents } from 'react-async-component';
@@ -7,7 +7,7 @@ import ServerTiming from 'servertiming';
 
 import debug from 'debug';
 import React from 'react';
-import {renderToString, renderToStaticMarkup} from 'react-dom/server';
+import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import Helmet from 'react-helmet';
 
 import buildClientConfig from './buildClientConfig';
@@ -16,30 +16,31 @@ import Root from '../../app/Root';
 import Html from '../templates/Html';
 
 import configureStore from '../../app/store/store';
-import {INITIAL_CONSTRUCT} from '../../app/core/constants';
+import { INITIAL_CONSTRUCT } from '../../app/core/constants';
 
 const log = debug('react-playground:server:render');
 const perfomanceLog = debug('react-playground:server:perfomance');
 
 const App = (store, req, routerContext) => (
-    <Redux store={store}>
-        <StaticRouter location={req.url} context={routerContext}>
-          <Root />
-        </StaticRouter>
-    </Redux>
+  <Redux store={store}>
+    <StaticRouter location={req.url} context={routerContext}>
+      <Root />
+    </StaticRouter>
+  </Redux>
 );
 
-const renderPage = (body, head, initialState, config, assets, {state, STATE_IDENTIFIER} = {}) => {
+const renderPage = (body, head, initialState, config, assets, { state, STATE_IDENTIFIER } = {}) => {
   perfomanceLog('rendering page result for ');
   const clientConfig = buildClientConfig(config);
 
-  const html = renderToStaticMarkup(<Html
-    body={body || ''}
-    head={head}
-    initialState={initialState}
-    config={clientConfig}
-    assets={assets}
-    asyncComponents={{state, STATE_IDENTIFIER}} />
+  const html = renderToStaticMarkup(
+    <Html
+      body={body || ''}
+      head={head}
+      initialState={initialState}
+      config={clientConfig}
+      assets={assets}
+      asyncComponents={{ state, STATE_IDENTIFIER }} />
   );
 
   return `<!doctype html>${html}`;
@@ -54,13 +55,13 @@ export default function renderAppWrapper(assets, config) {
     // creating store
     const store = configureStore({});
     // dispatch initial state construction to update dynamic values
-    store.dispatch({type: INITIAL_CONSTRUCT});
+    store.dispatch({ type: INITIAL_CONSTRUCT });
     // create router context
     const routerContext = {};
     // construct app component with async loaded chunks
     const asyncSplit = await withAsyncComponents(App(store, req, routerContext));
     // getting async component after code split loaded
-    const {appWithAsyncComponents} = asyncSplit;
+    const { appWithAsyncComponents } = asyncSplit;
     //  actual component to string
     const body = renderToString(appWithAsyncComponents);
     // getting head

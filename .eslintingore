@@ -1,3 +1,4 @@
-src/server/public/lib/*
+src/server/public/*
 build/*
 docker/*
+flow-typed/*

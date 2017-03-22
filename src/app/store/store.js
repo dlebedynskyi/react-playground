@@ -7,23 +7,19 @@ import thunkMiddleware from 'redux-thunk';
 import reducers from '../core/reducers';
 import dummyReducer from './dummyReducer';
 
-const debugEnhancer =
-  typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ?
-  window.devToolsExtension() : f => f;
+const debugEnhancer = typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
+  ? window.devToolsExtension()
+  : f => f;
 
 export default function configureStore(initialState = {}) {
   const initialReducers = createAsyncReducers({}, Object.keys(initialState));
 
   const enhancer = compose(
-     applyMiddleware(thunkMiddleware), // middlewares
-     debugEnhancer
-   );
-
-  const store = createStore(
-    initialReducers,
-    initialState,
-    enhancer
+    applyMiddleware(thunkMiddleware), // middlewares
+    debugEnhancer
   );
+
+  const store = createStore(initialReducers, initialState, enhancer);
 
   // registry for async reducers
   store.asyncReducers = {};
@@ -32,14 +28,13 @@ export default function configureStore(initialState = {}) {
     module.hot.accept('../core/reducers', () => {
       const nextReducers = require('../core/reducers').default; // eslint-disable-line global-require
 
-      const replace = {...nextReducers, ...store.asyncReducers};
+      const replace = { ...nextReducers, ...store.asyncReducers };
       store.replaceReducer(replace);
     });
   }
 
   return store;
 }
-
 
 export function createAsyncReducers(asyncReducers, persist = []) {
   const allReducers = {
@@ -53,14 +48,15 @@ export function createAsyncReducers(asyncReducers, persist = []) {
     }
   });
 
-
   return combineReducers(allReducers);
 }
 
 export function injectReducer(store, name, asyncReducer, force = false) {
   if (!force && {}.hasOwnProperty.call(store.asyncReducers, name)) {
     const r = store.asyncReducers[name];
-    if (r === dummyReducer) { return; }
+    if (r === dummyReducer) {
+      return;
+    }
   }
 
   store.asyncReducers[name] = asyncReducer;

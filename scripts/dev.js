@@ -6,9 +6,8 @@ const openBrowser = require('react-dev-utils/openBrowser');
 const webpackClient = require('./client');
 const webpackServer = require('./server');
 
-const {SERVER_PATH, COMPILED} = require('../config/paths');
+const { SERVER_PATH, COMPILED } = require('../config/paths');
 const env = require('../config/environment');
-
 
 const logger = require('./logger');
 
@@ -23,24 +22,31 @@ const monitorServer = () => {
     script: SERVER_PATH,
     watch: [COMPILED]
   })
-  .once('start', () => {
-    logger.end('Server started');
-    if (process.env.NO_BROWSER !== 'true') {
-      const url = `${env.protocol}://${env.hostname}${env.port ? `:${env.port}` : ''}`;
-      log(`setting timer to open browser at ${url}`);
-      setTimeout(() => { openBrowser(url); }, 1000);
-    }
-  })
-  .on('restart', () => {
-    logger.info('restarting monitor');
-  })
-  .on('crash', err => {
-    logger.error('monitor failed', err);
-  })
-  .on('quit', process.exit);
+    .once('start', () => {
+      logger.end('Server started');
+      if (process.env.NO_BROWSER !== 'true') {
+        const url = `${env.protocol}://${env.hostname}${env.port ? `:${env.port}` : ''}`;
+        log(`setting timer to open browser at ${url}`);
+        setTimeout(
+          () => {
+            openBrowser(url);
+          },
+          1000
+        );
+      }
+    })
+    .on('restart', () => {
+      logger.info('restarting monitor');
+    })
+    .on('crash', err => {
+      logger.error('monitor failed', err);
+    })
+    .on('quit', process.exit);
 };
 
-const onExit = code => { process.exit(code); };
+const onExit = code => {
+  process.exit(code);
+};
 
 process.on('EADDRINUSE', onExit);
 process.on('SIGINT', onExit);
@@ -49,6 +55,4 @@ process.on('SIGTERM', onExit);
 clearConsole();
 logger.start('Starting build');
 
-webpackClient()
-.then(() => webpackServer())
-.then(() => monitorServer());
+webpackClient().then(() => webpackServer()).then(() => monitorServer());

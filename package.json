@@ -1,11 +1,13 @@
 {
   "name": "react-playground",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/server.js",
   "scripts": {
     "clean": "rm -rf build",
     "lint": "eslint src",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "flow:ci": "flow check",
     "build:dev:client": "webpack --config config/webpack.config.dev.js",
     "build:dev:server": "webpack --config config/webpack.config.server.js",
     "build:dev": "npm run clean && npm run build:dev:server && npm run build:dev:client",
@@ -16,13 +18,17 @@
     "prestart:release": "npm run build",
     "start:release": "node build/server.js",
     "prestart": "npm run clean",
+    "format": "prettier-eslint --write \"src/**/*.{js,jsx}\" \"test/**/*.js\" \"config/**/*.js\" \"scripts/**/*.js\"",
     "start": "NODE_ENV=development DEBUG=react-playground:* node scripts/dev.js",
     "dev": "NODE_ENV=development DEBUG=react-playground:* node scripts/dev.js",
-    "test": "NODE_ENV=test NODE_PATH=src ava",
+    "test": "NODE_ENV=test ava",
+    "test:ci": "NODE_ENV=test CI=true ava --verbose",
+    "ci": "npm run lint && npm run flow:ci && npm run test:ci",
     "test:watch": "npm run test -- --watch"
   },
   "ava": {
     "files": [
+      "src/**/*.spec.js",
       "tests/**/*.spec.js"
     ],
     "source": [
@@ -37,6 +43,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dlebedynskyi/react-playground.git"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier-eslint --write",
+      "git add"
+    ]
   },
   "license": "MIT",
   "author": "Dima Lebedynskyi",
@@ -58,8 +70,8 @@
     "react-dom": "^15.4.2",
     "react-helmet": "^4.0.0",
     "react-redux": "^5.0.2",
-    "react-router": "4.0.0-beta.6",
-    "react-router-dom": "^4.0.0-beta.5",
+    "react-router": "4.0.0",
+    "react-router-dom": "^4.0.0",
     "recompose": "^0.22.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
@@ -89,20 +101,25 @@
     "eslint-config-airbnb": "^14.0.0",
     "eslint-module-utils": "^2.0.0",
     "eslint-plugin-ava": "^4.2.0",
+    "eslint-plugin-flowtype": "^2.30.4",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.5.0",
     "extract-text-webpack-plugin": "2.0.0-beta.5",
     "file-loader": "^0.10.0",
+    "husky": "^0.13.2",
     "ignore-styles": "^5.0.1",
     "jsdom": "^9.11.0",
     "json-loader": "^0.5.4",
+    "lint-staged": "^3.4.0",
     "nodemon": "^1.11.0",
     "opn": "^4.0.2",
     "postcss": "^5.2.0",
     "postcss-loader": "^1.1.1",
-    "postcss-smart-import": "^0.6.7",
     "precss": "^1.4.0",
+    "prettier": "^0.22.0",
+    "prettier-eslint": "^4.3.2",
+    "prettier-eslint-cli": "^3.1.2",
     "react-dev-utils": "^0.5.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "strip-loader": "^0.1.2",

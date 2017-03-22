@@ -1,0 +1,35 @@
+[include]
+
+# Including these files causes issues.
+
+[ignore]
+.*/infrastructure/*
+*/build/*
+# node modules that don't work well with flow. fbjs -lol
+.*/node_modules/fbjs/.*
+.*/node_modules/stylelint/.*
+.*/node_modules/flow-remove-types/.*
+.*/node_modules/flow-coverage-report/.*
+
+[libs]
+# Official "flow-typed" repository definitions.
+flow-typed/npm
+
+
+# Note: the following definitions come bundled with flow. It can be handy
+# to reference them.
+# React: https://github.com/facebook/flow/blob/master/lib/react.js
+# Javascript: https://github.com/facebook/flow/blob/master/lib/core.js
+# Node: https://github.com/facebook/flow/blob/master/lib/node.js
+# DOM: https://github.com/facebook/flow/blob/master/lib/dom.js
+# BOM: https://github.com/facebook/flow/blob/master/lib/bom.js
+# CSSOM: https://github.com/facebook/flow/blob/master/lib/cssom.js
+# IndexDB: https://github.com/facebook/flow/blob/master/lib/indexeddb.js
+
+[options]
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+esproposal.export_star_as=enable
+
+[version]
+^0.41.0
