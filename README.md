@@ -206,9 +206,9 @@ This may not be ideal for some scenarios and should be used with caution. Main r
  
  
  
- ###Caveats using async reducers###
+ ### Caveats using async reducers
  
- -  **SSR.** we don't won't to loose initialState that was sent from server. Redux currently is checking that once we create store on client and will remove all state that does not have reducers yet. _And we don't have it since we have not loaded our components yet_. To fix that we use `dummyReducer` function that will be later replaced with real one. 
+ -  **SSR.** we don't want to loose initialState that was sent from server. Redux currently is checking that once we create store on client and will remove all state that does not have reducers yet. _And we don't have it since we have not loaded our components yet_. To fix that we use `dummyReducer` function that will be later replaced with real one. 
  
 ```
 const initialReducers = createAsyncReducers({}, Object.keys(initialState));
