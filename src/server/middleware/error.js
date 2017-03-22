@@ -10,8 +10,9 @@ import Error from '../templates/Error';
  * 2.) a non get request was made and was unsuccessfully routed
  *     falling into this 500 code block
  */
+/* eslint-disable no-unused-vars */
 export const onError = (err, req, res, next) => {
-  // eslint-disable-line no-unused-vars
+/* eslint-enable no-unused-vars */
   if (process.env.NODE_ENV === 'development') {
     console.error(err); // eslint-disable-line no-console
     renderError(res, err);

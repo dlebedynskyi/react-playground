@@ -1,10 +1,11 @@
+// @flow
 import { HOME_SWITCH } from '../constants';
 
-const initialState = {
+const initialState: Object = {
   counter: 0
 };
 
-const home = (state = initialState, action) => {
+const home = (state: Object = initialState, action: {type: string}) => {
   if (!action) {
     return state;
   }
